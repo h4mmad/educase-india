@@ -18,6 +18,9 @@ services:
       value: appuser
     - key: MYSQL_PASSWORD
       value: appPass123
+  ports:                    
+    - port: 3306
+      protocol: tcp
 
 # ─────────── Node / Express API (web) ───────────
 - type: web
@@ -28,7 +31,7 @@ services:
   autoDeploy: true
   envVars:
     - key: DB_HOST   
-      value: mysql-db
+      value: mysql-db-zpkp
     - key: DB_PORT
       value: "3306"
     - key: DB_USER

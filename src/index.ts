@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json())
 
 app.get("/ping", (req: Request, res: Response)=>{
-  res.status(201).json({"message": "pong"});
+  res.status(200).json({"message": "pong"});
 })
 
 app.post(
