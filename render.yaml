@@ -1,9 +1,9 @@
 services:
-  # ─────────────────── MySQL private service ───────────────────
+  # ────────────────── MySQL private service ──────────────────
   - type: pserv
     name: mysql-db
     env: docker
-    dockerfilePath: mysql.Dockerfile   
+    dockerfilePath: mysql.Dockerfile
     disk:
       name: mysql-data
       mountPath: /var/lib/mysql
@@ -17,32 +17,23 @@ services:
         value: appuser
       - key: MYSQL_PASSWORD
         value: appPass123
-    plan: starter                      
+    plan: starter          # paid dyno
 
-  # ─────────────────── Node / Express API ───────────────────
+  # ────────────────── Node / Express API ──────────────────
   - type: web
     name: school-api
     env: docker
     dockerfilePath: Dockerfile
-    autoDeploy: true
     plan: free
+    autoDeploy: true
     envVars:
       - key: DB_HOST
-        fromService:
-          type: service
-          name: mysql-db
-          property: host
+        value: mysql-db      # internal hostname Render assigns
       - key: DB_PORT
-        fromService:
-          type: service
-          name: mysql-db
-          property: port
+        value: "3306"
       - key: DB_USER
         value: appuser
+      - key: DB_PASSWORD
+        value: appPass123
       - key: DB_NAME
         value: appdb
-      - key: DB_PASSWORD
-        fromService:
-          type: service
-          name: mysql-db
-          envVarKey: MYSQL_PASSWORD
