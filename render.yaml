@@ -18,9 +18,6 @@ services:
       value: appuser
     - key: MYSQL_PASSWORD
       value: appPass123
-  ports:                    
-    - port: 3306
-      protocol: tcp
 
 # ─────────── Node / Express API (web) ───────────
 - type: web
