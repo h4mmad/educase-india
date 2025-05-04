@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS schools (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  latitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL
+);
