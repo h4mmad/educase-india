@@ -1,33 +1,21 @@
-import express, {NextFunction, Request, Response} from 'express';
-import { validateBody } from './midlleware/validate';
-import { addSchoolSchema } from './schemas/school';
+import express from 'express';
+import { validateBody, validateQuery } from './midlleware/validate';
+import { addSchoolSchema,listSchoolsQuerySchema } from './schemas/school';
+import { addSchoolHandler, listSchoolHandler } from './controllers/schoolController';
 
 const app = express();
 app.use(express.json())
 
-
-app.use(express.json())
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("HII");  
-})
-
-
 app.post(
   '/addSchool',
   validateBody(addSchoolSchema),
-  (req: Request, res: Response) => {
-    // ...do your DB insert...
-    console.log(req.body)
-    res.status(201).json({id: ""});
-    // no `return res.json(...)`
-  }
+  addSchoolHandler
 );
 
-app.get("/listSchools", (req: Request, res: Response) => {
 
-
-})
+app.get("/listSchools",
+   validateQuery(listSchoolsQuerySchema),
+    listSchoolHandler)
 
 const PORT = process.env.PORT || 3000
 
