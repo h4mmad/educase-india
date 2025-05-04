@@ -1,0 +1,43 @@
+services:
+  - type: pserv
+    name: mysql-db
+    env: docker
+    repo: .
+    dockerfilePath: mysql.Dockerfile
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 5
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true           # you can leave this or set your own
+      - key: MYSQL_DATABASE
+        value: appdb                  # matches your local DB_NAME
+      - key: MYSQL_USER
+        value: appuser                # matches your local DB_USER
+      - key: MYSQL_PASSWORD
+        value: appPass123             # matches your local DB_PASSWORD
+    plan: starter
+
+
+  # ---------------------------------
+  # 2) Node API
+  # ---------------------------------
+  - type: web
+    name: school-api
+    env: docker
+    repo: .
+    autoDeploy: true
+    envVars:
+      - key: DB_HOST
+        fromService: mysql-db
+        property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_USER
+        value: appuser           # same as local DB_USER
+      - key: DB_PASSWORD
+        value: appPass123        # same as local DB_PASSWORD
+      - key: DB_NAME
+        value: appdb             # your local DB_NAME
+    plan: free
