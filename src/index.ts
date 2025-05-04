@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { validateBody, validateQuery } from './midlleware/validate';
 import { addSchoolSchema,listSchoolsQuerySchema } from './schemas/school';
 import { addSchoolHandler, listSchoolHandler } from './controllers/schoolController';
@@ -6,6 +6,9 @@ import { addSchoolHandler, listSchoolHandler } from './controllers/schoolControl
 const app = express();
 app.use(express.json())
 
+app.get("/ping", (req: Request, res: Response)=>{
+  res.status(201).json({"message": "pong"});
+})
 
 app.post(
   '/addSchool',
