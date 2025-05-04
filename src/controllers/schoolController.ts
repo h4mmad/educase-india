@@ -20,7 +20,7 @@ export const addSchoolHandler: RequestHandler<{}, {}, AddSchoolPayload> =
     res.status(201).json({id});
   }catch(err:any){
     console.error("Error inserting school:", err);
-    res.status(500).json({ error: 'Could not add school' });
+    res.status(500).json({ error: err });
   }
   };
 
@@ -59,6 +59,6 @@ async(req, res)=>{
       res.json(schools)
     }catch(err: any){
       console.error("Error reading from db:", err);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: err });
     }
   }
