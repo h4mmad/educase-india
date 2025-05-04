@@ -1,10 +1,9 @@
 services:
-  # ──────────── 1. MySQL private service ────────────
+  # ─────────────────── MySQL private service ───────────────────
   - type: pserv
     name: mysql-db
     env: docker
-    repo: .
-    dockerfilePath: mysql.Dockerfile
+    dockerfilePath: mysql.Dockerfile   
     disk:
       name: mysql-data
       mountPath: /var/lib/mysql
@@ -18,33 +17,32 @@ services:
         value: appuser
       - key: MYSQL_PASSWORD
         value: appPass123
-    plan: starter
+    plan: starter                      
 
-  # ──────────── 2. Node / Express web service ────────────
+  # ─────────────────── Node / Express API ───────────────────
   - type: web
     name: school-api
     env: docker
-    repo: .
+    dockerfilePath: Dockerfile
     autoDeploy: true
     plan: free
     envVars:
-      # internal host provided by Render
       - key: DB_HOST
         fromService:
+          type: service
           name: mysql-db
           property: host
-      # internal port (3306) from same service
       - key: DB_PORT
         fromService:
+          type: service
           name: mysql-db
           property: port
-      # static values that match your local .env
       - key: DB_USER
         value: appuser
       - key: DB_NAME
         value: appdb
-      # pull the password Render already set on mysql‑db
       - key: DB_PASSWORD
         fromService:
-          name:       mysql-db
-          envVarKey:  MYSQL_PASSWORD
+          type: service
+          name: mysql-db
+          envVarKey: MYSQL_PASSWORD
