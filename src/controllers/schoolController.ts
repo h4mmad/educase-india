@@ -1,4 +1,4 @@
-import {Request, RequestHandler, Response} from 'express';
+import {RequestHandler} from 'express';
 import { AddSchoolPayload, ListSchoolsQuery, SchoolWithDistance } from "../schemas/school";
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { v4 as uuidv4 } from 'uuid';

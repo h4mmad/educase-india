@@ -5,10 +5,6 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 // Express middle ware functions expect the form
 // (req: Request, res: Response, next: NextFunction) => void
 
-
-// Generic validate function lets you write a function that works over any type
-
-
 export function validateBody<T>(schema: ZodSchema<T>): RequestHandler<{}, {}, T> {
   return (
     req: Request<{}, {}, T>,
